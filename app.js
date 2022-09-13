@@ -10,23 +10,38 @@ app.use(express.urlencoded({ extended: false }))
 
 app.get('/', async (req, res) => {
 
-    try {
-        const allurls = await pool.query(
-            'SELECT * FROM urls')
+    pool.query(`SELECT * FROM urls`,
+        (err, results) => {
+            if (err) {
+                throw err
+            }
 
-        res.render('index', { allurls: allurls.rows })
+            res.render('index', { results: results.rows })
+        })
 
-    } catch (err) {
-        console.log(err.message)
-    }
 
 })
 
-app.post('/:shortUrls', async (req, res) => {
-    const fullurl = req.body.fullUrl
-    const shorturl = shortId.generate()
+app.get('/delete/:shortLink', async (req, res) => {
 
-    pool.query(`INSERT INTO urls VALUES ($1, $2, $3)`, [fullurl, shorturl, 0],
+    console.log(req.params.shortLink)
+    pool.query(`DELETE FROM urls WHERE shorturl = ($1) RETURNING *`, [req.params.shortLink],
+        (err, results) => {
+            if (err) {
+                throw err
+            }
+
+            console.log(results.rows)
+
+            res.redirect('/')
+        })
+})
+
+app.post('/:shortUrls', async (req, res) => {
+    /*  const fullurl = req.body.fullUrl
+     const shorturl = shortId.generate() */
+
+    pool.query(`INSERT INTO urls VALUES ($1, $2, $3)`, [req.body.fullUrl, shortId.generate(), 0],
         (err, results) => {
             if (err) {
                 throw err
@@ -55,13 +70,12 @@ app.get('/:shortUrl', async (req, res) => {
                     }
                     res.redirect(results.rows[0].fullurl)
                 })
-
         })
-
 
 })
 
-const port = process.env.PORT || 5000
-app.listen(port, () => {
-    console.log('Server running at port:', port)
+const PORT = process.env.PORT || 5000
+
+app.listen(PORT, () => {
+    console.log(`Date: ${new Date().toLocaleDateString()}) at ${new Date().toLocaleTimeString()}, Server started on port ${PORT} `)
 })
