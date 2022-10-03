@@ -1,0 +1,6 @@
+CREATE TABLE urls(
+    fullurl VARCHAR(250) UNIQUE  NOT NULL,
+    shorturl VARCHAR(250) UNIQUE NOT NULL, 
+    count SMALLINT NOT NULL);
+
+    

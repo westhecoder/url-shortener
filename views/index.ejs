@@ -8,6 +8,32 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css"
     />
+    <!-- JavaScript Bundle with Popper -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- CSS only -->
+    <!-- <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT"
+      crossorigin="anonymous"
+    /> -->
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.min.js"></script>
+
+    <script src="https://unpkg.com/@popperjs/core@2/dist/umd/popper.js"></script>
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.5.3/bootbox.min.js"
+      integrity="sha512-U3Q2T60uOxOgtAmm9VEtC3SKGt9ucRbvZ+U3ac/wtvNC+K21Id2dNHzRUC7Z4Rs6dzqgXKr+pCRxx5CyOsnUzg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+
     <title>URL Shortner 2.0</title>
   </head>
   <body>
@@ -48,7 +74,11 @@
               <a href="<%= shortUrl.shorturl %> "> <%= shortUrl.shorturl %> </a>
             </td>
             <td><%= shortUrl.count %></td>
-            <td><button>Edit Url</button></td>
+            <td>
+              <button onclick="editLink(`<%= shortUrl.shorturl %>`)">
+                Edit Url
+              </button>
+            </td>
             <td>
               <a href="/delete/<%= shortUrl.shorturl %>"
                 ><button>Delete Link</button></a
@@ -60,4 +90,31 @@
       </table>
     </div>
   </body>
+
+  //TODO: To remove any spaces on the new updated shourt url.
+  <script>
+    function editLink(shorturl) {
+      bootbox.prompt({
+        title: "Enter your new customized short URL!",
+        value: shorturl,
+        callback: (result) => {
+          alert("Your new shortlink is: " + result)
+
+          const links = shorturl + " " + result
+
+          console.log(links)
+
+          const putURL = {
+            method: "PUT",
+            headers: {"Content-Type": "applicaiton/json"},
+          }
+
+          fetch(`/nshorturl/${links}`, putURL).then((response) => {
+            console.log(response)
+          })
+          console.log(result + "...." + shorturl)
+        },
+      })
+    }
+  </script>
 </html>
