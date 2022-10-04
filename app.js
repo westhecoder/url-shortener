@@ -111,8 +111,9 @@ app.get('/:shortUrl', async (req, res) => {
 
 })
 
-const PORT = process.env.PORT || 5000
+const HOST = '0.0.0.0'
+const PORT = process.env.PORT || 8080
 
-app.listen(PORT, () => {
+app.listen(PORT, HOST, () => {
     console.log(`Date: ${new Date().toLocaleDateString()}) at ${new Date().toLocaleTimeString()}, Server started on port ${PORT}`)
 })
