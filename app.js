@@ -1,5 +1,5 @@
 const express = require('express')
-const shortId = require('shortId')
+const shortId = require('shortid')
 const pool = require('./db')
 
 
@@ -114,6 +114,6 @@ app.get('/:shortUrl', async (req, res) => {
 const HOST = '0.0.0.0'
 const PORT = process.env.PORT || 8080
 
-app.listen(PORT, HOST, () => {
+app.listen(PORT, () => {
     console.log(`Date: ${new Date().toLocaleDateString()}) at ${new Date().toLocaleTimeString()}, Server started on port ${PORT}`)
 })
