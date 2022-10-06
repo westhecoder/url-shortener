@@ -2,10 +2,8 @@
   "dependencies": {
     "ejs": "^3.1.8",
     "express": "^4.18.1",
-    "nodemon": "^2.0.16",
     "pg": "^8.7.3",
     "popups": "^1.1.3",
-    "prompt-sync": "^4.2.0",
     "shortid": "^2.2.16"
   },
   "name": "url-shortener",
@@ -13,10 +11,14 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon app.js",
     "start": "node app.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": ""
+  "description": "",
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
 }
